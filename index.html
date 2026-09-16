@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PageRank</title>
+</head>
+
+<body>
+    <header>
+        <h1>Aula 05 - Page Rank</h1>
+        <p>Exemplo de PageRank.</p>
+
+        <style>
+            body {
+                font-family: Calibri, sans-serif
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            th,
+            #foot {
+                background-color: #ddd;
+                padding: 10px;
+                text-align: center;
+            }
+
+            td {
+                padding: 15px;
+                border: 1px solid #ccc;
+                vertical-align: top;
+            }
+
+            h2 {
+                margin-top: 5px;
+            }
+
+            .destaque {
+                background-color: lightyellow;
+            }
+
+            .exemplo {
+                background-color: aqua;
+            }
+
+            footer {
+                padding: 10px;
+            }
+        </style>
+    </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4">Aula 05 - PageRank</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>
+                        <h2>Imagens</h2>
+
+                        <img src="img/Paisagem_Minas_Gerais.jpg" alt="Paisagem de Minas Gerais" width="100" height="50">
+                        <img src="img/Paisagem_Japão.jpg" alt="Paisagem do Japão" width="100" height="50">
+                        <img src="img/Paisagem_Praia.jpg" alt="Paisagem de Praia">
+                    </td>
+
+                    <td>
+                        <h2>Video</h2>
+
+                        <video controls src="video/Paisagens_Japonesa.mp4" width="100%"
+                            poster="img/Paisagem_Japão.jpg"></video>
+                    </td>
+
+                    <td>
+                        <h2>Áudio</h2>
+
+                        <audio controls>
+                            <source src="audio/Música_Stay_With_Me.mp3" type="audio/mpeg">
+                            <source src="audio/Música_Stay_With_Me.ogg" type="audio/ogg">
+                            Seu navegador não suporta áudio.
+                        </audio>
+                    </td>
+
+                    <td>
+                        <h2>Formulário</h2>
+
+                        <form action="processar.php" method="post">
+                            <label for="nome">Nome:</label>
+                            <input type="text" id="nome" name="nome" required>
+
+                            <br>
+
+                            <label for="email">E-mail:</label>
+                            <input type="email" id="email" name="email" required>
+
+                            <br>
+
+                            <label for="mensagem">Mensagem:</label>
+                            <textarea id="mensagem" name="mensagem"></textarea>
+
+                            <br>
+
+                            <input type="submit" value="Enviar">
+                        </form>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <h2>Links</h2>
+
+                        <a href="https://www.google.com/">Google</a>
+
+                        <br>
+
+                        <a
+                            href="https://www.google.com/search?gs_ssp=eJzj4tTP1TcwTM8wqzJg9OLJzcxLLFZITy1KzCwGAF8AB_k&q=minas+gerais&rlz=1C1HKFL_pt-PTBR1211BR1211&oq=minas+&gs_lcrp=EgZjaHJvbWUqDwgBEC4YQxixAxiABBiKBTIGCAAQRRg5Mg8IARAuGEMYsQMYgAQYigUyEggCEC4YQxivARjHARiABBiKBTIHCAMQABiABDIHCAQQABiABDIHCAUQABiABDIPCAYQABhDGLEDGIAEGIoFMhIIBxAuGEMYrwEYxwEYgAQYigUyBwgIEAAYgATSAQgxNjY1ajBqN6gCALACAA&sourceid=chrome&source=chrome.ob&ie=UTF-8"><img
+                                src="img/Paisagem_Minas_Gerais.jpg" alt="Paisagem de Minas Gerais"></a>
+
+                        <br>
+
+                        <a href="https://www.google.com/search?q=ilha+comprida&sca_esv=0d501e854b6a7678&rlz=1C1HKFL_pt-PTBR1211BR1211&sxsrf=APpeQnvVduwV6vJmPOQWYnyAvm9JWPxhGA%3A1788727672039&ei=eNGdauX9AbfZ1sQP3reS8A0&biw=1920&bih=911&gs_ssp=eJzj4tTP1TcwMSgvKzBg9OLNzMlIVEjOzy0oykxJBABnvghl&oq=ilh&gs_lp=Egxnd3Mtd2l6LXNlcnAiA2lsaCoCCAEyDRAuGEMYsQMYgAQYigUyDRAuGIAEGIoFGEMYsQMyChAuGEMYgAQYigUyDRAuGIAEGIoFGEMYsQMyChAuGIAEGIoFGEMyDRAuGIAEGIoFGEMYsQMyChAuGIAEGIoFGEMyChAuGIAEGIoFGEMyCBAuGIAEGLEDMgoQLhiABBiKBRhDMhwQLhhDGLEDGIAEGIoFGJcFGNwEGN4EGOAE2AEBSPUQUIsFWNgGcAF4AZABAJgBrAGgAY0DqgEDMC4zuAEDyAEA-AEBmAIEoAKtA8ICCxAAGKoHGNYEGLADwgIKEAAYRxjWBBiwA8ICDRAAGIAEGIoFGEMYsAPCAg4QABjkAhjWBBiwA9gBAcICFxAuGNwGGLgGGNoGGNgCGMgDGLAD2AEBwgIXEC4Y2AIYuAYY2gYY3AYYyAMYsAPYAQHCAgQQIxgnwgIEEC4YJ8ICCxAAGIAEGLEDGIMBwgIIEAAYgAQYsQPCAgsQLhiABBixAxiDAcICEBAuGIAEGIoFGEMYsQMYgwHCAgoQABiABBiKBRhDmAMA4gMKEgUwLDkzOCCRTogGAZAGE7oGBggBEAEYCZIHAzEuM6AHnT-yBwMwLjO4B6QDwgcDMi00yAcZgAgB&sclient=gws-wiz-serp"
+                            target="_blank">Praia</a>
+                    </td>
+
+                    <td>
+                        <h2>Listas</h2>
+
+                        <ol>
+                            <li>
+                                Passo 1
+                            </li>
+                            <li>
+                                Passo 2
+                            </li>
+                            <li>
+                                Passo 3
+                            </li>
+                        </ol>
+
+                        <ul>
+                            <li>Item A</li>
+                            <li>Item B</li>
+                            <li>Item C</li>
+                        </ul>
+                    </td>
+
+                    <td>
+                        <h2>Tabelas</h2>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Coluna 1
+                                    </th>
+                                    <th>
+                                        Coluna 2
+                                    </th>
+                                    <th>
+                                        Coluna 3
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Linha 1</td>
+                                    <td>Dado 1</td>
+                                    <td>Dado 2</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Linha 2</td>
+                                    <td>Dado 3</td>
+                                    <td>Dado 4</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+
+                    <td>
+                        <h2>Identificadores e Classes</h2>
+
+                        <p id="introducao">Parágrafo com <strong>id</strong>.</p>
+                        <p class="destaque">Parágrafo com classe "destaque".</p>
+                        <p class="destaque">Parágrafo com classe "destaque".</p>
+
+                        <div class="exemplo">
+                            <h3>Div Contêiner</h3>
+
+                            <p>Parágrafo explicativo.</p>
+                            <p>Parágrafo explicativo.</p>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td id="foot" colspan="4">&copy Exemplo didático de HTML</td>
+                </tr>
+            </tfoot>
+        </table>
+    </main>
+
+    <footer style="text-align: center;">
+        &copy; 2026 - Exemplo didático de HTML
+    </footer>
+</body>
+
+</html>
