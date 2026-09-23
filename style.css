@@ -1,0 +1,214 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Calibri, Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+/* Cabeçalho principal */
+header {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+header h1 {
+    margin: 0 0 8px;
+    font-size: 32px;
+}
+
+header p {
+    margin: 0;
+    font-size: 17px;
+    opacity: 0.9;
+}
+
+/* Área principal */
+main {
+    width: 95%;
+    max-width: 1400px;
+    margin: 30px auto;
+}
+
+/* Organiza os cards */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+/* Cada seção funciona como um card */
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
+}
+
+h2 {
+    margin-top: 0;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+/* Imagens */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 5px;
+    object-fit: cover;
+}
+
+.imagens img {
+    width: 100px;
+    height: 60px;
+}
+
+/* Vídeo */
+video {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+}
+
+/* Áudio */
+audio {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Links */
+a {
+    color: #2980b9;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #1c5980;
+    text-decoration: underline;
+}
+
+/* Listas */
+ol,
+ul {
+    padding-left: 25px;
+    line-height: 1.8;
+}
+
+/* Tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f6f9;
+}
+
+/* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+input[type="submit"] {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+input[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+/* Classes demonstrativas */
+.destaque {
+    background-color: #fff8d6;
+    padding: 10px;
+    border-left: 4px solid #f1c40f;
+    border-radius: 5px;
+}
+
+.exemplo {
+    background-color: #e8f8f5;
+    padding: 15px;
+    border-left: 4px solid #1abc9c;
+    border-radius: 5px;
+}
+
+#introducao {
+    background-color: #eef3f7;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    background-color: #2c3e50;
+    color: white;
+    padding: 18px;
+    margin-top: 30px;
+}
+
+/* Adaptação para telas menores */
+@media (max-width: 900px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
